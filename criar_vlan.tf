@@ -19,7 +19,7 @@ provider "fortimanager" {
 resource "fortimanager_exec_workspace_action" "lockres" {
   action         = "lockbegin"
   scopetype      = "adom"
-  adom           = "vFW"
+  adom           = "DummyAdom"
   target         = ""
   param          = ""
   comment        = ""
@@ -63,7 +63,7 @@ resource "fortimanager_json_generic_api" "Commit_adom" {
       "method": "exec",
       "params": [
           {
-            "url": "/dvmdb/adom/vFW/workspace/commit"
+            "url": "/dvmdb/adom/DummyAdom/workspace/commit"
           }
       ]
   }
@@ -74,7 +74,7 @@ resource "fortimanager_json_generic_api" "Commit_adom" {
 resource "fortimanager_exec_workspace_action" "unlockres" {
   action         = "lockend"
   scopetype      = "adom"
-  adom           = "vFW"
+  adom           = "DummyAdom"
   target         = ""
   param          = ""
   comment        = ""
@@ -83,7 +83,7 @@ resource "fortimanager_exec_workspace_action" "unlockres" {
 }
 
 resource "fortimanager_securityconsole_install_device" "Install_Device_Settings" {
-  fmgadom          = "vFW"
+  fmgadom          = "DummyAdom"
   flags            = ["auto_lock_ws"]
   scope {
     name = "FGT2-N2"
