@@ -57,22 +57,19 @@ resource "fortimanager_json_generic_api" "Create_Vlan_100" {
   JSON
   }
 
-
-resource "fortimanager_exec_workspace_action" "unlockres" {
-  action         = "commit"
-  scopetype      = "adom"
-  adom           = "vFW"
-  target         = ""
-  param          = ""
-  comment        = ""
-  force_recreate = uuid()
+resource "fortimanager_json_generic_api" "Commit_adom" {
+    json_content = <<JSON
+  {
+      "method": "exec",
+      "params": [
+          {
+            "url": "/dvmdb/adom/vFW/workspace/commit"
+          }
+      ]
+  }
+  JSON
   depends_on     = [fortimanager_json_generic_api.Create_Vlan_100]
-}
-
-
-
-
-
+  }
 
 resource "fortimanager_exec_workspace_action" "unlockres" {
   action         = "lockend"
@@ -82,5 +79,14 @@ resource "fortimanager_exec_workspace_action" "unlockres" {
   param          = ""
   comment        = ""
   force_recreate = uuid()
-  depends_on     = [fortimanager_json_generic_api.Create_Vlan_100]
+  depends_on     = [fortimanager_json_generic_api.Commit_adom]
+}
+
+resource "fortimanager_securityconsole_install_device" "Install_Device_Settings" {
+  fmgadom          = "vFW"
+  flags            = ["auto_lock_ws"]
+  scope {
+    name = "FGT2-N2"
+  }
+  depends_on     = [fortimanager_exec_workspace_action.unlockres]
 }
