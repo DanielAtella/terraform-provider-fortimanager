@@ -32,7 +32,7 @@ resource "fortimanager_json_generic_api" "Create_Vlan_100" {
       "method": "add",
       "params": [
           {
-            "url": "/pm/config/device/FGT2-N2/global/system/interface",
+            "url": "/pm/config/device/FGT2-N1/global/system/interface",
               "data": {
                 "name": "VL_100",
                 "vdom": [
@@ -86,7 +86,7 @@ resource "fortimanager_securityconsole_install_device" "Install_Device_Settings"
   fmgadom          = "DummyAdom"
   flags            = ["auto_lock_ws"]
   scope {
-    name = "FGT2-N2"
+    name = "FGT2-N1"
   }
   depends_on     = [fortimanager_exec_workspace_action.unlockres]
 }
