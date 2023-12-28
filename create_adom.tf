@@ -1,5 +1,5 @@
 resource "fortimanager_exec_workspace_action" "lockres" {
-  count = var.is_dev_env == true ? 1 : 0
+  count = var.new_deploy == false ? 1 : 0
   action         = "lockbegin"
   scopetype      = "adom"
   adom           = "DummyAdom"

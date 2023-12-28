@@ -25,6 +25,7 @@ variable "hosts" {
   }))
 }
 
-variable "is_dev_env" {
+variable "new_deploy" {
   type = bool
+  default = true
 }
