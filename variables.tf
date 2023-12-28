@@ -1,7 +1,3 @@
-variable "region" {
-  type = string
-}
-
 variable "neighbors" {
   type = map(object({
     customer_asn = string
@@ -19,10 +15,7 @@ variable "interfaces" {
 }
 
 variable "hosts" {
-  type = map(object({
-    ami = string
-    instance_type = string
-  }))
+  type = list(string)
 }
 
 variable "new_deploy" {
