@@ -22,3 +22,7 @@ variable "new_deploy" {
   type = bool
   default = true
 }
+
+vlanid {
+  type = string
+}

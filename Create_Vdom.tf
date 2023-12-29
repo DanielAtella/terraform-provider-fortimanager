@@ -11,30 +11,23 @@ resource "fortimanager_exec_workspace_action" "lockres" {
 resource "fortimanager_json_generic_api" "Create_Vlan_100" {
     json_content = <<JSON
   {
-      "method": "add",
-      "params": [
-          {
-            "url": "/pm/config/device/FGT2-N1/global/system/interface",
-              "data": {
-                "name": "VL_100",
-                "vdom": [
-                    "FG-traffic"
-                ],
-                "mode": "static",
-                "ip": [
-                    "10.10.10.10",
-                    "255.255.255.0"
-                ],
-                "allowaccess": "ping",
-                "type": "vlan",
-                "vlanid": var.vlanid,
-                "vlan-protocol": "8021q",
-                "interface": [
-                    "LAG"
-                ]
-            }
-          }
-      ]
+    "method": "add",
+    "params": [
+      {
+        "data": [
+                  {
+                      "devid": "TPL1FWCO003",
+                      "name": "{{C-TEST}}",
+                      "opmode": 1,
+                      "vpn_id": 0
+                  }
+              ],
+        "url": "/dvmdb/adom/{{DummyAdom}}/device/{{Hostname_1801F}}/vdom"
+      }
+    ],
+    "session": "{{sessionVariable}}",
+    "verbose": 1,
+    "id": 1
   }
   JSON
   }

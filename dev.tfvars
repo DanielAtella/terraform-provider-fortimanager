@@ -13,4 +13,6 @@ interfaces = {
   eth1 = "eth1 description"
 }
 
+vlanid = 100
+
 hosts = ["FGT2"]
