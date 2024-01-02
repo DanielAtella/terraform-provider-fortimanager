@@ -1,8 +1,7 @@
 resource "fortios_firewall_policy" "fw_pol1" {
-  action             = "accept"
+  action             = var.FW.PSA.policy_action
   logtraffic         = "utm"
-  name               = "policys1"
-  policyid           = 1
+  name               = var.FW.PSA.policy_name
   schedule           = "always"
   wanopt             = "disable"
   wanopt_detection   = "active"
@@ -13,22 +12,22 @@ resource "fortios_firewall_policy" "fw_pol1" {
   wsso               = "enable"
 
   dstaddr {
-    name = "all"
+    name = var.FW.PSA.dstaddr
   }
 
   dstintf {
-    name = "DMZ"
+    name = var.FW.PSA.dstintf
   }
 
   service {
-    name = "HTTP"
+    name = var.FW.PSA.service
   }
 
   srcaddr {
-    name = "all"
+    name = var.FW.PSA.srcaddr
   }
 
   srcintf {
-    name = "port3"
+    name = var.FW.PSA.srcintf
   }
 }

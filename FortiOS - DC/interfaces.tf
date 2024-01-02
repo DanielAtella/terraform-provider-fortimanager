@@ -1,11 +1,11 @@
-resource "fortios_networking_interface_port" "vlan1" {
+resource "fortios_networking_interface_port" "vlan_100_PSA" {
     role = "lan"
     mode = "static"
     type = "vlan"
-    vlanid = "3"
-    name = "TerraForm-1"
-    vdom = "root"
-    ip = "3.123.33.10/24"
-    interface = "port2"
+    vlanid = var.DC.PSA.dmz0_vlanid
+    name = var.DC.PSA.dmz0_ifname
+    vdom = var.DC.PSA.vdom
+    ip = var.DC.PSA.dmz0_address
+    interface = var.DC.PSA.dmz1_intf
     allowaccess = "ping"
 }

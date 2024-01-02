@@ -1,26 +1,27 @@
-variable "customer" {
+variable "DC" {
   type = map(object({
-    customer_asn = string
-    address_family = string
-    authentication_key = string
-    vlanid = number
-    adom = string
+    dmz0_vlanid = number
+    dmz0_intf = string
+    dmz0_ifname = string
+    dmz0_address = string
+    dmz1_vlanid = number
+    dmz1_intf = string
+    dmz1_ifname = string
+    dmz1_address = string
+    vdom = string
+    zone = string
   }))
 }
 
-variable "vlans" {
-  type = list(string)
-}
 
-variable "interfaces" {
-  type = map(string)
-}
-
-variable "hosts" {
-  type = list(string)
-}
-
-variable "new_deploy" {
-  type = bool
-  default = true
+variable "FW" {
+  type = map(object({
+  policy_name = string
+  policy_action = string
+  srcintf = string
+  dstintf = string
+  service = string
+  srcaddr = optional(string, "all")
+  dstaddr = optional(string, "all")
+  }))
 }

@@ -1,7 +1,10 @@
-resource "fortios_system_zone" "trname" {
+resource "fortios_system_zone" "Zone_100_PSA" {
   intrazone = "allow"
-  name      = "DMZ"
+  name      = var.DC.PSA.zone
   interface {
-    interface_name = "TerraForm-1"
+    interface_name = var.DC.PSA.dmz0_ifname
+  }
+  interface {
+    interface_name = "port2"
   }
 }

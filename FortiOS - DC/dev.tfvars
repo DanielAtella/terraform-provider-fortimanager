@@ -1,18 +1,24 @@
-customer = {
-  n1 = {
-  customer_asn = "65536"
-  address_family = "ipv4"
-  authentication_key = "mykey"
-  vlanid = 100
-  adom = "DummyAdom"
+DC = {
+  PSA = {
+    dmz0_vlanid = 100
+    dmz0_intf = "port2"
+    dmz0_ifname = "VL100"
+    dmz0_address = "192.168.10.1/24"
+    dmz1_vlanid = 200
+    dmz1_intf = "port2"
+    dmz1_ifname = "VL200"
+    dmz1_address = "192.168.11.1/24"
+    vdom = "root"
+    zone = "DummyZone"
 }
 }
 
-vlans = ["100", "200"]
-
-interfaces = {
-  eth0 = "eth0 description"
-  eth1 = "eth1 description"
+FW = {
+  PSA = {
+  policy_name = "Pol_Test1"
+  policy_action = "accept"
+  srcintf = "port1"
+  dstintf = "DummyZone"
+  service = "HTTP"
+  }
 }
-
-hosts = ["FGT2"]
