@@ -1,8 +1,10 @@
-neighbors = {
+customer = {
   n1 = {
   customer_asn = "65536"
   address_family = "ipv4"
   authentication_key = "mykey"
+  vlanid = 100
+  adom = "DummyAdom"
 }
 }
 
@@ -12,7 +14,5 @@ interfaces = {
   eth0 = "eth0 description"
   eth1 = "eth1 description"
 }
-
-vlanid = 100
 
 hosts = ["FGT2"]

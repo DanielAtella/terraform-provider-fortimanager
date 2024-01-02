@@ -1,8 +1,10 @@
-variable "neighbors" {
+variable "customer" {
   type = map(object({
     customer_asn = string
     address_family = string
     authentication_key = string
+    vlanid = number
+    adom = string
   }))
 }
 
@@ -21,8 +23,4 @@ variable "hosts" {
 variable "new_deploy" {
   type = bool
   default = true
-}
-
-vlanid {
-  type = string
 }
