@@ -1,8 +1,8 @@
 terraform {
   required_providers {
-    fortimanager = {
+    fortios = {
       source = "fortinetdev/fortios"
-      version = "1.9.0"
+      version = "1.18.1"
     }
   }
 }
