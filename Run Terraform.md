@@ -26,7 +26,10 @@ Adicionar Resource local
 
 .terraform.d/plugins/project.local/local/fortimanager/1.10.0/linux_amd64/terraform-provider-fortimanager_v1.9.0
 
+Example
+mkdir -p /root/.terraform.d/plugins/project.local/local/fortimanager/1.10.0/linux_amd64/
 
+unzip -d /root/.terraform.d/plugins/project.local/local/fortimanager/1.10.0/linux_amd64/ /opt/fmg/terraform-provider-fortimanager_v1.9.0_linux_amd64.zip terraform-provider-fortimanager_v1.9.0
 
 main.tf
 terraform {
