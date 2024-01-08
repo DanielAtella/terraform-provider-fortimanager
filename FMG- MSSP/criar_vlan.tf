@@ -9,27 +9,28 @@ resource "fortimanager_exec_workspace_action" "vlan_lockres" {
 }
 
 resource "fortimanager_json_generic_api" "Create_Vlan_100" {
-    json_content = <<JSON
+  for_each = var.customer.DummyCustumer.interfaces
+  json_content = <<JSON
   {
       "method": "add",
       "params": [
           {
             "url": "/pm/config/device/{{var.customer.DummyCustumer.hostname}}/global/system/interface",
               "data": {
-                "name": {{var.customer.DummyCustumer.interfaces.FGT8-NET1["ifname"]}},
+                "name": {{var.customer.DummyCustumer.interfaces[each.value.ifname]}},
                 "vdom": [
                     {{var.customer.DummyCustumer.vdom}}
                 ],
                 "mode": "static",
                 "ip": [
-                    {{var.customer.DummyCustumer.interfaces.FGT8-NET1["address"]}}
+                    {{var.customer.DummyCustumer.interfaces[each.value.address]}}
                 ],
                 "allowaccess": "ping",
                 "type": "vlan",
-                "vlanid": {{var.customer.DummyCustumer.interfaces.FGT8-NET1["vlanid"]}},
+                "vlanid": {{var.customer.DummyCustumer.interfaces[each.value.vlanid]}},
                 "vlan-protocol": "8021q",
                 "interface": [
-                    {{var.customer.DummyCustumer.interfaces.FGT8-NET1["interface"]}}
+                    {{var.customer.DummyCustumer.interfaces[each.value.interface]}}
                 ]
             }
           }

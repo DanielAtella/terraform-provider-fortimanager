@@ -75,6 +75,20 @@ resource "fortimanager_json_generic_api" "Config_bgp_neighbors" {
   JSON
   }
 
+resource "fortimanager_json_generic_api" "bgp_Commit_adom" {
+    json_content = <<JSON
+  {
+      "method": "exec",
+      "params": [
+          {
+            "url": "/dvmdb/adom/{{var.customer.DummyCustumer.adom}}/workspace/commit"
+          }
+      ]
+  }
+  JSON
+  depends_on     = [fortimanager_json_generic_api.Config_bgp_neighbors]
+  }
+
 resource "fortimanager_exec_workspace_action" "bgp_unlockres" {
   action         = "lockend"
   scopetype      = "adom"
@@ -83,7 +97,7 @@ resource "fortimanager_exec_workspace_action" "bgp_unlockres" {
   param          = ""
   comment        = ""
   force_recreate = uuid()
-  depends_on     = [fortimanager_json_generic_api.vlan_Commit_adom]
+  depends_on     = [fortimanager_json_generic_api.bgp_Commit_adom]
 }
 
 resource "fortimanager_securityconsole_install_device" "bgp_Install_Device_Settings" {
