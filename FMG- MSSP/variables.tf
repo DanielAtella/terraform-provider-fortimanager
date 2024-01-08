@@ -1,7 +1,7 @@
 variable "customer" {
   type = map(object({
     interfaces = map(object({
-      vlanid = optional(number, "")
+      vlanid = optional(string, "")
       interface = optional(string, "")
       ifname = optional(string, "")
       address = optional(string, "")
@@ -10,13 +10,21 @@ variable "customer" {
       mode = optional(string,"static")
     }))
     router = map(object({
-      customer_asn = optional(number, "")
+      customer_asn = optional(string, "")
       routerid = optional(string, "")
+      ebgp-multipath = optional(string, "enable")
+      graceful-restart = optional(string, "enable")
+      graceful-restart-time =  optional(string, "15")
+      graceful-stalepath-time =  optional(string, "30")
       neighbors = map(object({
         neighbor_address = optional(string, "")
-        neighbor_asn = optional(number, "2860")
+        neighbor_asn = optional(string, "2860")
         authentication_key = optional(string, "qazwsx123!")
         address_family = optional(string, "")
+        }))
+      redistribute = map(object({
+        connected = optional(string, "enable")
+        connected6 = optional(string, "")
         }))
       community_list = map(object({
         comm_list_name = optional(string, "")
@@ -28,8 +36,9 @@ variable "customer" {
         prefix_list_address = optional(string, "")
         prefix_list_ge = optional(string, "0")
         prefix_list_le = optional(string, "0")
+        prefix_list_action = optional(string, "permit")
         }))
-      router_map = map(object({
+      route_map = map(object({
         rm_name = optional(string, "")
         rule = map(object({
           rm_action = optional(string, "")
@@ -64,6 +73,7 @@ variable "customer" {
       }))
     adom = optional(string, "")
     vdom = optional(string, "")
+    hostname = optional(string, "")
   }))
 }
 

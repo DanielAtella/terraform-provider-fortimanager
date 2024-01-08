@@ -1,67 +1,62 @@
-resource "fortimanager_exec_workspace_action" "lockres" {
+resource "fortimanager_exec_workspace_action" "vdom_lockres" {
   action         = "lockbegin"
   scopetype      = "adom"
-  adom           = "DummyAdom"
+  adom           = var.customer.DummyCustumer.adom
   target         = ""
   param          = ""
   comment        = ""
   force_recreate = uuid()
 }
 
-resource "fortimanager_json_generic_api" "Create_Vlan_100" {
+resource "fortimanager_json_generic_api" "Create_Vdom" {
     json_content = <<JSON
   {
     "method": "add",
     "params": [
       {
-        "data": [
-                  {
-                      "devid": "TPL1FWCO003",
-                      "name": "{{C-TEST}}",
+        "url": "/dvmdb/adom/{{var.customer.DummyCustumer.adom}}/device/{{var.customer.DummyCustumer.hostname}}/vdom",
+        "data": {
+                      "devid": {{var.customer.DummyCustumer.hostname}},
+                      "name": {{var.customer.DummyCustumer.vdom}},
                       "opmode": 1,
                       "vpn_id": 0
-                  }
-              ],
-        "url": "/dvmdb/adom/{{DummyAdom}}/device/{{Hostname_1801F}}/vdom"
+                }
       }
-    ],
-    "session": "{{sessionVariable}}",
-    "verbose": 1,
-    "id": 1
+    ]
   }
   JSON
   }
 
-resource "fortimanager_json_generic_api" "Commit_adom" {
+resource "fortimanager_json_generic_api" "Commit_adom_create_vdom" {
     json_content = <<JSON
   {
       "method": "exec",
       "params": [
           {
-            "url": "/dvmdb/adom/DummyAdom/workspace/commit"
+            "url": "/dvmdb/adom/{{var.customer.DummyCustumer.adom}}/workspace/commit"
           }
       ]
   }
   JSON
-  depends_on     = [fortimanager_json_generic_api.Create_Vlan_100]
+  depends_on     = [fortimanager_json_generic_api.Create_Vdom]
   }
 
-resource "fortimanager_exec_workspace_action" "unlockres" {
+resource "fortimanager_exec_workspace_action" "vdom_unlockres" {
   action         = "lockend"
   scopetype      = "adom"
-  adom           = "DummyAdom"
+  adom           = var.customer.DummyCustumer.adom
   target         = ""
   param          = ""
   comment        = ""
   force_recreate = uuid()
-  depends_on     = [fortimanager_json_generic_api.Commit_adom]
+  depends_on     = [fortimanager_json_generic_api.Commit_adom_create_vdom]
 }
 
-resource "fortimanager_securityconsole_install_device" "Install_Device_Settings" {
-  fmgadom          = "DummyAdom"
+resource "fortimanager_securityconsole_install_device" "vdom_Install_Device_Settings" {
+  fmgadom          = var.customer.DummyCustumer.adom
   flags            = ["auto_lock_ws"]
   scope {
-    name = "FGT2-N1"
+    name = var.customer.DummyCustumer.hostname
   }
-  depends_on     = [fortimanager_exec_workspace_action.unlockres]
+  depends_on     = [fortimanager_exec_workspace_action.vdom_unlockres]
 }

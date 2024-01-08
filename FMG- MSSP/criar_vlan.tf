@@ -1,7 +1,7 @@
-resource "fortimanager_exec_workspace_action" "lockres" {
+resource "fortimanager_exec_workspace_action" "vlan_lockres" {
   action         = "lockbegin"
   scopetype      = "adom"
-  adom           = "DummyAdom"
+  adom           = var.customer.DummyCustumer.adom
   target         = ""
   param          = ""
   comment        = ""
@@ -14,23 +14,22 @@ resource "fortimanager_json_generic_api" "Create_Vlan_100" {
       "method": "add",
       "params": [
           {
-            "url": "/pm/config/device/FGT2-N1/global/system/interface",
+            "url": "/pm/config/device/{{var.customer.DummyCustumer.hostname}}/global/system/interface",
               "data": {
-                "name": "VL_100",
+                "name": {{var.customer.DummyCustumer.interfaces.FGT8-NET1["ifname"]}},
                 "vdom": [
-                    "FG-traffic"
+                    {{var.customer.DummyCustumer.vdom}}
                 ],
                 "mode": "static",
                 "ip": [
-                    "10.10.10.10",
-                    "255.255.255.0"
+                    {{var.customer.DummyCustumer.interfaces.FGT8-NET1["address"]}}
                 ],
                 "allowaccess": "ping",
                 "type": "vlan",
-                "vlanid": var.vlanid,
+                "vlanid": {{var.customer.DummyCustumer.interfaces.FGT8-NET1["vlanid"]}},
                 "vlan-protocol": "8021q",
                 "interface": [
-                    "LAG"
+                    {{var.customer.DummyCustumer.interfaces.FGT8-NET1["interface"]}}
                 ]
             }
           }
@@ -39,13 +38,13 @@ resource "fortimanager_json_generic_api" "Create_Vlan_100" {
   JSON
   }
 
-resource "fortimanager_json_generic_api" "Commit_adom" {
+resource "fortimanager_json_generic_api" "vlan_Commit_adom" {
     json_content = <<JSON
   {
       "method": "exec",
       "params": [
           {
-            "url": "/dvmdb/adom/DummyAdom/workspace/commit"
+            "url": "/dvmdb/adom/{{var.customer.DummyCustumer.adom}}/workspace/commit"
           }
       ]
   }
@@ -53,22 +52,22 @@ resource "fortimanager_json_generic_api" "Commit_adom" {
   depends_on     = [fortimanager_json_generic_api.Create_Vlan_100]
   }
 
-resource "fortimanager_exec_workspace_action" "unlockres" {
+resource "fortimanager_exec_workspace_action" "vlan_unlockres" {
   action         = "lockend"
   scopetype      = "adom"
-  adom           = "DummyAdom"
+  adom           = var.customer.DummyCustumer.adom
   target         = ""
   param          = ""
   comment        = ""
   force_recreate = uuid()
-  depends_on     = [fortimanager_json_generic_api.Commit_adom]
+  depends_on     = [fortimanager_json_generic_api.vlan_Commit_adom]
 }
 
-resource "fortimanager_securityconsole_install_device" "Install_Device_Settings" {
-  fmgadom          = "DummyAdom"
+resource "fortimanager_securityconsole_install_device" "vlan_Install_Device_Settings" {
+  fmgadom          = var.customer.DummyCustumer.adom
   flags            = ["auto_lock_ws"]
   scope {
-    name = "FGT2-N1"
+    name = var.customer.DummyCustumer.hostname
   }
-  depends_on     = [fortimanager_exec_workspace_action.unlockres]
+  depends_on     = [fortimanager_exec_workspace_action.vlan_unlockres]
 }

@@ -44,7 +44,7 @@ customer = {
         customer_asn = 65022
         routerid = "192.168.12.229"
           neighbors = {
-            0 {
+            0 = {
               neighbor_address = "192.168.12.236"
               neighbor_asn = 2860
               authentication_key = "qazwsx123!"
@@ -52,67 +52,86 @@ customer = {
             }
           }
           community_list = {
-            0 {
+            0 = {
               comm_list_name = "VRF-COMM-LIST"
               comm_list_action = "permit"
               comm_list_match = "2860:1"
             }
-            1 {
+            1 = {
               comm_list_name = "INET-COMM-LIST"
               comm_list_action = "permit"
               comm_list_match = "2860:2"
             }
           }
           prefix_list = {
-            0 {
+            0 = {
               prefix_list_name = "PL-PUBLIC-NETWORKS"
               prefix_list_address = "192.168.12.248/29"
             }
-            1 {
+            1 = {
               prefix_list_name = "PL-ONLY-DEFAULT"
               prefix_list_address = "0.0.0.0/0"
             }
           }
-          router_map = {
-            "RM-VRF-MAIN-DC-IN" {
+          route_map = {
+            "RM-VRF-MAIN-DC-IN" = {
               rm_name = "RM-VRF-MAIN-DC-IN"
-              0 {
+              rule = {
+                0 = {
                 rm_set_comm = "2860:1"
+                }
               }
             }
-            "RM-VRF-MAIN-DC-OUT" {
+            "RM-VRF-MAIN-DC-OUT" = {
               rm_name = "RM-VRF-MAIN-DC-OUT"
-              0 {
+              rule = { 
+                0 = {
                 rm_match_comm = "VRF-COMM-LIST"
                 rm_action = "deny"
-              }
-              1 {
-                rm_set_comm = "2860:12"
-              }
+                }
+                1 = {
+                  rm_set_comm = "2860:12"
+                }
+                }
             }
-            "RM-INET-MAIN-DC-IN" {
+            "RM-INET-MAIN-DC-IN" = {
               rm_name = "RM-INET-MAIN-DC-IN"
-              0 {
+              rule = {
+                0 = {
                 rm_match_comm = "VRF-COMM-LIST"
                 rm_match_address = "PL-ONLY-DEFAULT"
                 rm_set_comm = "2860:2"
               }
+              }
             }
-            "RM-INET-MAIN-DC-OUT" {
+            "RM-INET-MAIN-DC-OUT" = {
               rm_name = "RM-INET-MAIN-DC-OUT"
-              0 {
+              rule = {
+                0 = {
                 rm_match_comm = "INET-COMM-LIST"
                 rm_action = "deny"
               }
-              1 {
+              1 = {
                 rm_match_address = "PL-PUBLIC-NETWORKS"
                 rm_set_comm = "2860:16"
               }
+              }
             }
           }
+          redistribute = {
+        }
+      }
+    }
+    firewall = {
+      FGT8__FG-traffic = {
+        ip_pool = {
+        }
+        object_address = {
+        }
       }
     }
     vdom = "FG-Traffic"
     adom = "DummyAdom"
+    hostname = "FGT8"
   }
 }
