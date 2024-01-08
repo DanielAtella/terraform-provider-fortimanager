@@ -55,7 +55,7 @@ variable "customer" {
         policy_action = optional(string, "")
         srcintf = optional(string, "")
         dstintf = optional(string, "")
-        service = optional(string, "")
+        service = optional(string, "ALL")
         srcaddr = optional(string, "all")
         dstaddr = optional(string, "all")
         ip_pool = map(object({

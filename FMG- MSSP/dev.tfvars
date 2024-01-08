@@ -123,7 +123,7 @@ customer = {
       }
     }
     firewall = {
-      FGT8__FG-traffic = {
+      FGT8_FG-traffic = {
         ip_pool = {
         }
         object_address = {
