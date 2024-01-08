@@ -17,20 +17,20 @@ resource "fortimanager_json_generic_api" "Create_Vlan_100" {
           {
             "url": "/pm/config/device/{{var.customer.DummyCustumer.hostname}}/global/system/interface",
               "data": {
-                "name": {{var.customer.DummyCustumer.interfaces[each.value.ifname]}},
+                "name": {{each.value.ifname}},
                 "vdom": [
                     {{var.customer.DummyCustumer.vdom}}
                 ],
                 "mode": "static",
                 "ip": [
-                    {{var.customer.DummyCustumer.interfaces[each.value.address]}}
+                    {{each.value.address}}
                 ],
                 "allowaccess": "ping",
                 "type": "vlan",
-                "vlanid": {{var.customer.DummyCustumer.interfaces[each.value.vlanid]}},
+                "vlanid": {{each.value.vlanid}},
                 "vlan-protocol": "8021q",
                 "interface": [
-                    {{var.customer.DummyCustumer.interfaces[each.value.interface]}}
+                    {{each.value.interface}}
                 ]
             }
           }

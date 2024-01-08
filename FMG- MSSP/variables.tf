@@ -33,7 +33,7 @@ variable "customer" {
         }))
       prefix_list = map(object({
         prefix_list_name = optional(string, "")
-        prefix_list_address = optional(string, "")
+        prefix_list_address = optional(list(string), [""])
         prefix_list_ge = optional(string, "0")
         prefix_list_le = optional(string, "0")
         prefix_list_action = optional(string, "permit")

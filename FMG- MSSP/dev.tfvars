@@ -66,11 +66,11 @@ customer = {
           prefix_list = {
             0 = {
               prefix_list_name = "PL-PUBLIC-NETWORKS"
-              prefix_list_address = "192.168.12.248/29"
+              prefix_list_address = ["192.168.12.248/29"]
             }
             1 = {
               prefix_list_name = "PL-ONLY-DEFAULT"
-              prefix_list_address = "0.0.0.0/0"
+              prefix_list_address = ["0.0.0.0/0"]
             }
           }
           route_map = {

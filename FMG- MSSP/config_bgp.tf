@@ -9,39 +9,39 @@ resource "fortimanager_exec_workspace_action" "bgp_lockres" {
 }
 
 resource "fortimanager_object_router_prefixlist" "Config_bgp_prefixlist" {
-  for_each = var.customer.DummyCustumer.router.prefix_list
-  name = var.customer.DummyCustumer.router.prefix_list[each.value.prefix_list_name]
-  rule {
-    action = var.customer.DummyCustumer.router.prefix_list[each.value.prefix_list_action]
-    prefix = var.customer.DummyCustumer.router.prefix_list[each.value.prefix_list_address]
-  }
+    for_each = var.customer.DummyCustumer.router.bgp.prefix_list
+    name = each.value.prefix_list_name
+    rule {
+        action = each.value.prefix_list_action
+        prefix = each.value.prefix_list_address
+    }
   depends_on     = [fortimanager_exec_workspace_action.bgp_lockres]
 }
 
 resource "fortimanager_object_router_communitylist" "Config_bgp_communitylist" {
-  for_each = var.customer.DummyCustumer.router.community_list
-  name = var.customer.DummyCustumer.router.community_list[each.value.comm_list_name]
+  for_each = var.customer.DummyCustumer.router.bgp.community_list
+  name = each.value.comm_list_name
   rule {
-    action = var.customer.DummyCustumer.router.community_list[each.value.comm_list_action]
-    match = var.customer.DummyCustumer.router.community_list[each.value.comm_list_match]
+    action = each.value.comm_list_action
+    match = each.value.comm_list_match
   }
   depends_on     = [fortimanager_object_router_prefixlist.Config_bgp_prefixlist]
 }
 
 resource "fortimanager_object_router_routemap" "Config_bgp_routemap" {
-  for_each = var.customer.DummyCustumer.router.route_map
-  name = var.customer.DummyCustumer.router.route_map[each.value.rm_name]
+  for_each = var.customer.DummyCustumer.router.bgp.route_map
+  name = each.value.rm_name
   rule {
-    action = var.customer.DummyCustumer.router.route_map[each.value.rm_action]
-    match_community = var.customer.DummyCustumer.router.route_map[each.value.rm_match_comm]
-    set_community = var.customer.DummyCustumer.router.route_map[each.value.rm_set_comm]
-    match_ip_address = var.customer.DummyCustumer.router.route_map[each.value.rm_match_address]
+    action = each.value.rm_action
+    match_community = each.value.rm_match_comm
+    set_community = each.value.rm_set_comm
+    match_ip_address = each.value.rm_match_address
   }
   depends_on     = [fortimanager_object_router_prefixlist.Config_bgp_prefixlist]
 }
 
 resource "fortimanager_json_generic_api" "Config_bgp_neighbors" {
-  for_each = var.customer.DummyCustumer.router.bgp.neighbors
+  for_each = var.customer.DummyCustumer.router.bgp.bgp.neighbors
   json_content = <<JSON
   {
       "method": "set",
@@ -56,17 +56,17 @@ resource "fortimanager_json_generic_api" "Config_bgp_neighbors" {
                           "soft-reconfiguration": "enable",
                           "activate6": "disable",
                           "holdtime-timer": 15,
-                          "ip": {{var.customer.DummyCustumer.router.neighbors[each.value.neighbor_address]}},
+                          "ip": {{each.value.neighbor_address}},
                           "as-override": "enable",
                           "keep-alive-timer": 5,
-                          "remote-as": {{var.customer.DummyCustumer.router.neighbors[each.value.neighbor_asn]}},
-                          "password": {{var.customer.DummyCustumer.router.neighbors[each.value.authentication_key]}},
+                          "remote-as": {{each.value.neighbor_asn}},
+                          "password": {{each.value.authentication_key}},
                           "restart-time": 0,
                           "route-map-in": [
-                              {{var.customer.DummyCustumer.router.route_map.RM-VRF-MAIN-DC-IN}}
+                              {{var.customer.DummyCustumer.router.bgp.route_map.RM-VRF-MAIN-DC-IN}}
                           ],
                           "route-map-out": [
-                              {{var.customer.DummyCustumer.router.route_map.RM-VRF-MAIN-DC-OUT}}
+                              {{var.customer.DummyCustumer.router.bgp.route_map.RM-VRF-MAIN-DC-OUT}}
                           ],
                           "shutdown": "disable"
                   }
