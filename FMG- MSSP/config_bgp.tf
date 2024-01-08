@@ -41,6 +41,7 @@ resource "fortimanager_object_router_routemap" "Config_bgp_routemap" {
 }
 
 resource "fortimanager_json_generic_api" "Config_bgp_neighbors" {
+  for_each = var.customer.DummyCustumer.router.bgp.neighbors
   json_content = <<JSON
   {
       "method": "set",
@@ -55,11 +56,11 @@ resource "fortimanager_json_generic_api" "Config_bgp_neighbors" {
                           "soft-reconfiguration": "enable",
                           "activate6": "disable",
                           "holdtime-timer": 15,
-                          "ip": {{var.customer.DummyCustumer.router.neighbors["neighbor_address"]}},
+                          "ip": {{var.customer.DummyCustumer.router.neighbors[each.value.neighbor_address]}},
                           "as-override": "enable",
                           "keep-alive-timer": 5,
-                          "remote-as": {{var.customer.DummyCustumer.router.neighbors["neighbor_asn"]}},
-                          "password": {{var.customer.DummyCustumer.router.neighbors["authentication_key"]}},
+                          "remote-as": {{var.customer.DummyCustumer.router.neighbors[each.value.neighbor_asn]}},
+                          "password": {{var.customer.DummyCustumer.router.neighbors[each.value.authentication_key]}},
                           "restart-time": 0,
                           "route-map-in": [
                               {{var.customer.DummyCustumer.router.route_map.RM-VRF-MAIN-DC-IN}}
