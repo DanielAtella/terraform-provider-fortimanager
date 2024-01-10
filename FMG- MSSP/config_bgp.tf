@@ -47,7 +47,7 @@ resource "fortimanager_object_router_routemap" "Config_bgp_routemap" {
 }
 
 resource "fortimanager_json_generic_api" "Config_bgp_neighbors" {
-  for_each = var.customer.DummyCustumer.router.bgp.bgp.neighbors
+  for_each = var.customer.DummyCustumer.router.bgp.neighbors
   json_content = <<JSON
   {
       "method": "set",
