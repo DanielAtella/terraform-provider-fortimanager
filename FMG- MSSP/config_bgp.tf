@@ -67,38 +67,57 @@ resource "fortimanager_object_router_routemap" "Config_bgp_routemap" {
 
 resource "fortimanager_json_generic_api" "Config_bgp_neighbors" {
     for_each = var.new_deploy ? var.customer.DummyCustumer.router.bgp.neighbors : {}
-    json_content = <<JSON
-  {
-      "method": "set",
-      "params": [
-          {
-              "url": "/pm/config/device/${var.customer.DummyCustumer.hostname}/vdom/${var.customer.DummyCustumer.vdom}/router/bgp/neighbor",
-              "data": {
-                  "activate": "enable",
-                  "advertisement-interval": 0,
-                  "capability-graceful-restart": "enable",
-                  "soft-reconfiguration": "enable",
-                  "activate6": "disable",
-                  "holdtime-timer": 15,
-                  "ip": "${each.value.neighbor_address}",
-                  "as-override": "enable",
-                  "keep-alive-timer": 5,
-                  "remote-as": "${each.value.neighbor_asn}",
-                  "password": "${each.value.authentication_key}",
-                  "restart-time": 0,
-                  "route-map-in": [
-                      "${var.customer.DummyCustumer.router.bgp.route_map.RM-VRF-MAIN-DC-IN.rm_name}"
-                  ],
-                  "route-map-out": [
-                      "${var.customer.DummyCustumer.router.bgp.route_map.RM-VRF-MAIN-DC-OUT.rm_name}"
-                  ],
-                  "shutdown": "disable"
-              }
+
+    json_content = jsonencode({
+      "method" : "set",
+      "params" : [
+        {
+          "url" : "/pm/config/device/${var.customer.DummyCustumer.hostname}/vdom/${var.customer.DummyCustumer.vdom}/router/bgp/neighbor",
+          "data" : {
+            "activate" : "enable",
+            "advertisement-interval" : 0,
+            "capability-graceful-restart" : "enable",
+            "soft-reconfiguration" : "enable",
+            "activate6" : "disable",
+            "holdtime-timer" : 15,
+            "activate": each.value.address_family == "IPv4" ? "enable" : "disable",
+            "activate6": each.value.address_family == "IPv6" ? "enable" : "disable",
+            "ip" : each.value.address_family == "IPv4" ? each.value.neighbor_address : "",
+            "ip6" : each.value.address_family == "IPv6" ? each.value.neighbor_address : "",
+            "as-override" : "enable",
+            "keep-alive-timer" : 5,
+            "remote-as" : each.value.neighbor_asn,
+            "password" : each.value.authentication_key,
+            "restart-time" : 0,
+            "route-map-in" : [
+              var.customer.DummyCustumer.router.bgp.route_map.RM-VRF-MAIN-DC-IN.rm_name
+            ],
+            "route-map-out" : [
+              var.customer.DummyCustumer.router.bgp.route_map.RM-VRF-MAIN-DC-OUT.rm_name
+            ],
+            "shutdown" : "disable"
           }
+        }
       ]
+    })
   }
-JSON
-}
+
+resource "fortimanager_json_generic_api" "Delete_bgp_neighbors" {
+    for_each = var.new_deploy ? {} : var.customer.DummyCustumer.router.bgp.neighbors
+
+    json_content = jsonencode({
+      "method": "delete",
+      "params" : [
+        {
+          "url" : "/pm/config/device/${var.customer.DummyCustumer.hostname}/vdom/${var.customer.DummyCustumer.vdom}/router/bgp/neighbor",
+          "confirm": 1,
+          "filter": [
+                "ip", "==", each.value.neighbor_address
+            ],
+        }
+      ]
+    })
+  }
 
 resource "fortimanager_json_generic_api" "bgp_Commit_adom" {
     json_content = <<JSON

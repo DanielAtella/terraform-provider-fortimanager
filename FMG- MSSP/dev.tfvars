@@ -50,6 +50,18 @@ customer = {
               authentication_key = "qazwsx123!"
               address_family = "IPv4"
             }
+            1 = {
+              neighbor_address = "192.168.12.237"
+              neighbor_asn = 2860
+              authentication_key = "qazwsx123!"
+              address_family = "IPv4"
+            }
+            2 = {
+              neighbor_address = "2801:CAFE::"
+              neighbor_asn = 2860
+              authentication_key = "qazwsx123!"
+              address_family = "IPv6"
+            }
           }
           community_list = {
             0 = {
