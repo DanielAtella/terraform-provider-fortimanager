@@ -113,7 +113,7 @@ resource "fortimanager_json_generic_api" "Delete_bgp_neighbors" {
           "confirm": 1,
           "filter": [
                 "ip", "==", each.value.neighbor_address
-            ],
+            ]
         }
       ]
     })
