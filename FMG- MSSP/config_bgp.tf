@@ -46,41 +46,59 @@ resource "fortimanager_object_router_routemap" "Config_bgp_routemap" {
   depends_on     = [fortimanager_object_router_prefixlist.Config_bgp_prefixlist]
 }
 
+# Com condicional, apenas ira criar se new_deploy == true 
+# resource "fortimanager_object_router_routemap" "Config_bgp_routemap" {
+#   for_each = var.new_deploy ? var.customer.DummyCustumer.router.bgp.route_map : {} # TRUE
+#   for_each = var.new_deploy ? {} : var.customer.DummyCustumer.router.bgp.route_map  # FALSE
+#   name = each.key
+#   dynamic "rule" {
+#     for_each = each.value.rule
+#     content {
+#       match_community   = rule.value.rm_match_comm
+#       action            = rule.value.rm_action
+#       match_ip_address  = rule.value.rm_match_address
+#       set_community = try(
+#         rule.value.rm_set_comm != "" ? [rule.value.rm_set_comm] : [],
+#         []
+#       )
+#     }
+#   }
+# }
+
 resource "fortimanager_json_generic_api" "Config_bgp_neighbors" {
-  for_each = var.customer.DummyCustumer.router.bgp.neighbors
-  json_content = <<JSON
+    for_each = var.new_deploy ? var.customer.DummyCustumer.router.bgp.neighbors : {}
+    json_content = <<JSON
   {
       "method": "set",
       "params": [
           {
-              "url": "/pm/config/device/{{var.customer.DummyCustumer.hostname}}/vdom/{{var.customer.DummyCustumer.vdom}}/router/bgp/neighbor",
-              "data": 
-                  {
-                          "activate": "enable",
-                          "advertisement-interval": 0,
-                          "capability-graceful-restart": "enable",
-                          "soft-reconfiguration": "enable",
-                          "activate6": "disable",
-                          "holdtime-timer": 15,
-                          "ip": {{each.value.neighbor_address}},
-                          "as-override": "enable",
-                          "keep-alive-timer": 5,
-                          "remote-as": {{each.value.neighbor_asn}},
-                          "password": {{each.value.authentication_key}},
-                          "restart-time": 0,
-                          "route-map-in": [
-                              {{var.customer.DummyCustumer.router.bgp.route_map.RM-VRF-MAIN-DC-IN}}
-                          ],
-                          "route-map-out": [
-                              {{var.customer.DummyCustumer.router.bgp.route_map.RM-VRF-MAIN-DC-OUT}}
-                          ],
-                          "shutdown": "disable"
-                  }
+              "url": "/pm/config/device/${var.customer.DummyCustumer.hostname}/vdom/${var.customer.DummyCustumer.vdom}/router/bgp/neighbor",
+              "data": {
+                  "activate": "enable",
+                  "advertisement-interval": 0,
+                  "capability-graceful-restart": "enable",
+                  "soft-reconfiguration": "enable",
+                  "activate6": "disable",
+                  "holdtime-timer": 15,
+                  "ip": "${each.value.neighbor_address}",
+                  "as-override": "enable",
+                  "keep-alive-timer": 5,
+                  "remote-as": "${each.value.neighbor_asn}",
+                  "password": "${each.value.authentication_key}",
+                  "restart-time": 0,
+                  "route-map-in": [
+                      "${var.customer.DummyCustumer.router.bgp.route_map.RM-VRF-MAIN-DC-IN.rm_name}"
+                  ],
+                  "route-map-out": [
+                      "${var.customer.DummyCustumer.router.bgp.route_map.RM-VRF-MAIN-DC-OUT.rm_name}"
+                  ],
+                  "shutdown": "disable"
+              }
           }
       ]
   }
-  JSON
-  }
+JSON
+}
 
 resource "fortimanager_json_generic_api" "bgp_Commit_adom" {
     json_content = <<JSON
