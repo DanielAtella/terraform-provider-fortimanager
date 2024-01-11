@@ -1,44 +1,52 @@
 customer = {
   DummyCustumer = {
     zone = {
-      FGT8-NET1 ={
-        vlanid = 229
-        interface = "LAG"
-        ifname = "FGT8-NET1"
-        address = "192.168.12.237/31"
-        zone = "FGT8_NET"
-        type = "vlan"
+      "FGT8-NET" = {
+        interfaces = {
+          "FGT8-NET1" = {
+            vlanid = 229
+            interface = "LAG"
+            ifname = "FGT8-NET1"
+            address = "192.168.12.237/31"
+            type = "vlan"
+          }
+          "FGT8-NET2" ={
+            vlanid = 231
+            interface = "LAG"
+            ifname = "FGT8-NET2"
+            address = "192.168.12.239/31"
+            type = "vlan"
+          }
+        }
+      }
+      "FGT8-VPN" = {
+        interfaces = {
+          "FGT8-VPN1" = {
+            vlanid = 230
+            interface = "LAG"
+            ifname = "FGT8-VPN1"
+            address = "192.168.12.233/31"
+            type = "vlan"
+          }
+          "FGT8-VPN2" ={
+            vlanid = 232
+            interface = "LAG"
+            ifname = "FGT8-VPN2"
+            address = "192.168.12.235/31"
+            type = "vlan"
+          }
+        }
+      }
+      "Loopbacks" = {
+        interfaces = {
+          "Loopback1" = {
+            ifname = "Loopback1"
+            address = "192.168.12.248/32"
+            type = "loopback"
+          }
+        }
+      }
     }
-      FGT8-VPN1 ={
-        vlanid = 230
-        interface = "LAG"
-        ifname = "FGT8-VPN1"
-        address = "192.168.12.233/31"
-        zone = "FGT8_VPN"
-        type = "vlan"
-    }
-      FGT8-NET2 ={
-        vlanid = 231
-        interface = "LAG"
-        ifname = "FGT8-NET2"
-        address = "192.168.12.239/31"
-        zone = "FGT8_NET"
-        type = "vlan"
-    }
-      FGT8-VPN2 ={
-        vlanid = 232
-        interface = "LAG"
-        ifname = "FGT8-VPN2"
-        address = "192.168.12.235/31"
-        zone = "FGT8_VPN"
-        type = "vlan"
-    }
-      Loopback1 ={
-        ifname = "Loopback1"
-        address = "192.168.12.248/32"
-        type = "loopback"
-    }
-   }
     router = {
       bgp = {
         customer_asn = 65022
