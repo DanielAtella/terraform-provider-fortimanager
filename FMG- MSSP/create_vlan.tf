@@ -9,12 +9,12 @@ resource "fortimanager_exec_workspace_action" "vlan_lockres" {
 }
 
 resource "fortimanager_json_generic_api" "Create_Vlan" {
-    for_each = var.new_deploy ? var.customer.DummyCustumer.interfaces : {}
+    for_each = var.new_deploy ? var.customer.DummyCustumer.zone : {}
     json_content = jsonencode({
         "method": "add",
         "params": [
             {
-              "url": "/pm/config/device/{{var.customer.DummyCustumer.hostname}}/global/system/interface",
+              "url": "/pm/config/device/${var.customer.DummyCustumer.hostname}/global/system/interface",
                 "data": {
                   "name": each.value.ifname,
                   "vdom": [
@@ -38,13 +38,13 @@ resource "fortimanager_json_generic_api" "Create_Vlan" {
   }
 
 resource "fortimanager_json_generic_api" "Delete_Vlan" {
-    for_each = var.new_deploy ? {} : var.customer.DummyCustumer.interfaces
+    for_each = var.new_deploy ? {} : var.customer.DummyCustumer.zone
 
     json_content = jsonencode({
       "method": "delete",
       "params" : [
         {
-          "url" : "/pm/config/device/{{var.customer.DummyCustumer.hostname}}/global/system/interface",
+          "url" : "/pm/config/device/${var.customer.DummyCustumer.hostname}/global/system/interface",
           "confirm": 1,
           "filter": [
             "name", "in", each.value.ifname
@@ -54,17 +54,55 @@ resource "fortimanager_json_generic_api" "Delete_Vlan" {
     })
   }
 
+resource "fortimanager_json_generic_api" "Create_zone" {
+    for_each = var.new_deploy ? var.customer.DummyCustumer.interfaces : {}
+    json_content = jsonencode({
+        "method": "add",
+        "params": [
+            {
+              "url": "/pm/config/device/${var.customer.DummyCustumer.hostname}/vdom/${var.customer.DummyCustumer.vdom}/system/zone",
+                "data": {
+                  "name": each.key.zone,
+                  "intrazone": "deny",
+                  "mode": "static",
+                  "interface": [
+                    each.value.zone == each.value.zone ? each.value.ifname : ""
+                  ]
+              }
+            }
+        ]
+    })
+    }
+
+
+resource "fortimanager_json_generic_api" "Delete_Zone" {
+    for_each = var.new_deploy ? {} : var.customer.DummyCustumer.interfaces
+
+    json_content = jsonencode({
+      "method": "delete",
+      "params" : [
+        {
+          "url" : "/pm/config/device/${var.customer.DummyCustumer.hostname}/vdom/${var.customer.DummyCustumer.vdom}/system/zone",
+          "confirm": 1,
+          "filter": [
+            "name", "in", each.value.zone
+          ]
+        }
+      ]
+    })
+  }
+
 resource "fortimanager_json_generic_api" "vlan_Commit_adom" {
-    json_content = <<JSON
-  {
+    json_content = jsonencode({
+   {
       "method": "exec",
       "params": [
           {
-            "url": "/dvmdb/adom/{{var.customer.DummyCustumer.adom}}/workspace/commit"
+            "url": "/dvmdb/adom/${var.customer.DummyCustumer.adom}/workspace/commit"
           }
       ]
-  }
-  JSON
+   }
+  })
   depends_on     = [fortimanager_json_generic_api.Create_Vlan]
   }
 

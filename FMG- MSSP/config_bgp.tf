@@ -120,17 +120,17 @@ resource "fortimanager_json_generic_api" "Delete_bgp_neighbors" {
   }
 
 resource "fortimanager_json_generic_api" "bgp_Commit_adom" {
-    json_content = <<JSON
-  {
+    json_content = jsonencode({
+   {
       "method": "exec",
       "params": [
           {
-            "url": "/dvmdb/adom/{{var.customer.DummyCustumer.adom}}/workspace/commit"
+            "url": "/dvmdb/adom/${var.customer.DummyCustumer.adom}/workspace/commit"
           }
       ]
-  }
-  JSON
-  depends_on     = [fortimanager_json_generic_api.Config_bgp_neighbors]
+   }
+  })
+    depends_on     = [fortimanager_json_generic_api.Config_bgp_neighbors]
   }
 
 resource "fortimanager_exec_workspace_action" "bgp_unlockres" {

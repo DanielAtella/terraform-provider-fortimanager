@@ -15,3 +15,4 @@ provider "fortimanager" {
   scopetype    = "adom"
   adom         = "root"
 }
+
