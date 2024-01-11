@@ -1,6 +1,6 @@
 customer = {
   DummyCustumer = {
-    interfaces = {
+    zone = {
       FGT8-NET1 ={
         vlanid = 229
         interface = "LAG"

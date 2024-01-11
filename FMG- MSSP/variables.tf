@@ -1,13 +1,15 @@
 variable "customer" {
   type = map(object({
-    interfaces = map(object({
-      vlanid = optional(string, "")
-      interface = optional(string, "")
-      ifname = optional(string, "")
-      address = optional(string, "")
-      zone = optional(string, "")
-      type = optional(string, "")
-      mode = optional(string,"static")
+    adom = optional(string, "")
+    vdom = optional(string, "")
+    hostname = optional(string, "")
+    zone = map(object({
+          vlanid = optional(string, "")
+          interface = optional(string, "")
+          ifname = optional(string, "")
+          address = optional(string, "")
+          type = optional(string, "")
+          mode = optional(string,"static")
     }))
     router = map(object({
       customer_asn = optional(string, "")
@@ -71,9 +73,6 @@ variable "customer" {
           object_address_type = optional(string, "")
           }))
       }))
-    adom = optional(string, "")
-    vdom = optional(string, "")
-    hostname = optional(string, "")
   }))
 }
 
