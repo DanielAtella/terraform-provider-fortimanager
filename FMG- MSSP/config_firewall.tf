@@ -9,16 +9,16 @@ resource "fortimanager_exec_workspace_action" "fw_lockres" {
 }
 
 resource "fortimanager_packages_firewall_policy" "config_fw_policy" {
-  for_each = var.customer.DummyCustumer.firewall
-  action                  = var.customer.DummyCustumer.firewall[each.value.policy_action]
-  dstaddr                 = var.customer.DummyCustumer.firewall[each.value.dstaddr]
-  dstintf                 = var.customer.DummyCustumer.firewall[each.value.dstintf]
-  name                    = var.customer.DummyCustumer.firewall[each.value.policy_name]
-  natip                   = var.customer.DummyCustumer.firewall.ip_pool[each.value.ip_pool_name]
-  pkg                     = var.customer.DummyCustumer.firewall[each.value.policy_pkg_name]
-  service                 = var.customer.DummyCustumer.firewall[each.value.service]
-  srcaddr                 = var.customer.DummyCustumer.firewall[each.value.srcaddr]
-  srcintf                 = var.customer.DummyCustumer.firewall[each.value.srcintf]
+  for_each = var.customer.DummyCustumer.firewall.FGT8_FG-traffic.policy
+  action                  = each.value.policy_action
+  dstaddr                 = each.value.dstaddr
+  dstintf                 = each.value.dstintf
+  name                    = each.value.policy_name
+  natip                   = each.value.ip_pool_name
+  pkg                     = each.value.policy_pkg_name
+  service                 = each.value.service
+  srcaddr                 = each.value.srcaddr
+  srcintf                 = each.value.srcintf
   status                  = "enable"
   depends_on     = [fortimanager_exec_workspace_action.fw_lockres]
 }

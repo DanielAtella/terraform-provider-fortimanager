@@ -144,7 +144,18 @@ customer = {
     }
     firewall = {
       FGT8_FG-traffic = {
+        policy = {
+          "policy_1" = {
+            policy_name = "policy_1"
+            ip_pool_name = ["pool1"]
+            policy_action = "accept"
+            policy_pkg_name = "FGT8_FG-traffic"
+          }
+        }
         ip_pool = {
+          "pool1" = {
+            ip_pool_name = "pool1"
+          }
         }
         object_address = {
         }

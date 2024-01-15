@@ -46,25 +46,6 @@ resource "fortimanager_object_router_routemap" "Config_bgp_routemap" {
   depends_on     = [fortimanager_object_router_prefixlist.Config_bgp_prefixlist]
 }
 
-# Com condicional, apenas ira criar se new_deploy == true 
-# resource "fortimanager_object_router_routemap" "Config_bgp_routemap" {
-#   for_each = var.new_deploy ? var.customer.DummyCustumer.router.bgp.route_map : {} # TRUE
-#   for_each = var.new_deploy ? {} : var.customer.DummyCustumer.router.bgp.route_map  # FALSE
-#   name = each.key
-#   dynamic "rule" {
-#     for_each = each.value.rule
-#     content {
-#       match_community   = rule.value.rm_match_comm
-#       action            = rule.value.rm_action
-#       match_ip_address  = rule.value.rm_match_address
-#       set_community = try(
-#         rule.value.rm_set_comm != "" ? [rule.value.rm_set_comm] : [],
-#         []
-#       )
-#     }
-#   }
-# }
-
 resource "fortimanager_json_generic_api" "Config_bgp_neighbors" {
     for_each = var.new_deploy ? var.customer.DummyCustumer.router.bgp.neighbors : {}
 
@@ -121,14 +102,12 @@ resource "fortimanager_json_generic_api" "Delete_bgp_neighbors" {
 
 resource "fortimanager_json_generic_api" "bgp_Commit_adom" {
     json_content = jsonencode({
-   {
       "method": "exec",
       "params": [
           {
             "url": "/dvmdb/adom/${var.customer.DummyCustumer.adom}/workspace/commit"
           }
       ]
-   }
   })
     depends_on     = [fortimanager_json_generic_api.Config_bgp_neighbors]
   }
