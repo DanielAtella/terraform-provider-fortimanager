@@ -1,0 +1,465 @@
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_DNS" {
+        name = "DNS"
+        category = "Network Services"
+        tcp_portrange = "53"
+        udp_portrange = "53"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_HTTP" {
+        name = "HTTP"
+        category = "Web Access"
+        tcp_portrange = "80"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_HTTPS" {
+        name = "HTTPS"
+        category = "Web Access"
+        tcp_portrange = "443"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_IMAP" {
+        name = "IMAP"
+        category = "Email"
+        tcp_portrange = "143"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_IMAPS" {
+        name = "IMAPS"
+        category = "Email"
+        tcp_portrange = "993"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_LDAP" {
+        name = "LDAP"
+        category = "Authentication"
+        tcp_portrange = "389"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_DCE-RPC" {
+        name = "DCE"
+        category = "Remote Access"
+        tcp_portrange = "135"
+        udp_portrange = "135"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_POP3" {
+        name = "POP3"
+        category = "Email"
+        tcp_portrange = "110"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_POP3S" {
+        name = "POP3S"
+        category = "Email"
+        tcp_portrange = "995"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SAMBA" {
+        name = "SAMBA"
+        category = "File Access"
+        tcp_portrange = "139"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SMTP" {
+        name = "SMTP"
+        category = "Email"
+        tcp_portrange = "25"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SMTPS" {
+        name = "SMTPS"
+        category = "Email"
+        tcp_portrange = "465"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_KERBEROS" {
+        name = "KERBEROS"
+        category = "Authentication"
+        tcp_portrange = "88 464"
+        udp_portrange = "88 464"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_LDAP_UDP" {
+        name = "LDAP_UDP"
+        category = "Authentication"
+        udp_portrange = "389"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SMB" {
+        name = "SMB"
+        category = "File Access"
+        tcp_portrange = "445"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_ALL" {
+        name = "ALL"
+        category = "General"
+        protocol = "IP"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_ALL_TCP" {
+        name = "ALL_TCP"
+        category = "General"
+        tcp_portrange = "1-65535"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_ALL_UDP" {
+        name = "ALL_UDP"
+        category = "General"
+        udp_portrange = "1-65535"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_ALL_ICMP" {
+        name = "ALL_ICMP"
+        category = "General"
+        protocol = "ICMP"
+        icmptype =
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_ALL_ICMP6" {
+        name = "ALL_ICMP6"
+        category = "General"
+        protocol = "ICMP6"
+        icmptype =
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_GRE" {
+        name = "GRE"
+        category = "Tunneling"
+        protocol = "IP"
+        protocol_number = "47"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_AH" {
+        name = "AH"
+        category = "Tunneling"
+        protocol = "IP"
+        protocol_number = "51"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_ESP" {
+        name = "ESP"
+        category = "Tunneling"
+        protocol = "IP"
+        protocol_number = "50"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_AOL" {
+        name = "AOL"
+        visibility = "disable"
+        tcp_portrange = "5190-5194"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_BGP" {
+        name = "BGP"
+        category = "Network Services"
+        tcp_portrange = "179"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_DHCP" {
+        name = "DHCP"
+        category = "Network Services"
+        udp_portrange = "67-68"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_FINGER" {
+        name = "FINGER"
+        visibility = "disable"
+        tcp_portrange = "79"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_FTP" {
+        name = "FTP"
+        category = "File Access"
+        tcp_portrange = "21"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_FTP_GET" {
+        name = "FTP_GET"
+        category = "File Access"
+        tcp_portrange = "21"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_FTP_PUT" {
+        name = "FTP_PUT"
+        category = "File Access"
+        tcp_portrange = "21"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_GOPHER" {
+        name = "GOPHER"
+        visibility = "disable"
+        tcp_portrange = "70"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_H323" {
+        name = "H323"
+        category = "VoIP, Messaging & Other Applications"
+        tcp_portrange = "1720 1503"
+        udp_portrange = "1719"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_IKE" {
+        name = "IKE"
+        category = "Tunneling"
+        udp_portrange = "500 4500"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_Internet-Locator-Service" {
+        name = "Internet"
+        visibility = "disable"
+        tcp_portrange = "389"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_IRC" {
+        name = "IRC"
+        category = "VoIP, Messaging & Other Applications"
+        tcp_portrange = "6660-6669"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_L2TP" {
+        name = "L2TP"
+        category = "Tunneling"
+        tcp_portrange = "1701"
+        udp_portrange = "1701"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_NetMeeting" {
+        name = "NetMeeting"
+        visibility = "disable"
+        tcp_portrange = "1720"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_NFS" {
+        name = "NFS"
+        category = "File Access"
+        tcp_portrange = "111 2049"
+        udp_portrange = "111 2049"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_NNTP" {
+        name = "NNTP"
+        visibility = "disable"
+        tcp_portrange = "119"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_NTP" {
+        name = "NTP"
+        category = "Network Services"
+        tcp_portrange = "123"
+        udp_portrange = "123"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_OSPF" {
+        name = "OSPF"
+        category = "Network Services"
+        protocol = "IP"
+        protocol_number = "89"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_PC-Anywhere" {
+        name = "PC"
+        category = "Remote Access"
+        tcp_portrange = "5631"
+        udp_portrange = "5632"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_PING" {
+        name = "PING"
+        category = "Network Services"
+        protocol = "ICMP"
+        icmptype = "8"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_TIMESTAMP" {
+        name = "TIMESTAMP"
+        protocol = "ICMP"
+        visibility = "disable"
+        icmptype = "13"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_INFO_REQUEST" {
+        name = "INFO_REQUEST"
+        protocol = "ICMP"
+        visibility = "disable"
+        icmptype = "15"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_INFO_ADDRESS" {
+        name = "INFO_ADDRESS"
+        protocol = "ICMP"
+        visibility = "disable"
+        icmptype = "17"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_ONC-RPC" {
+        name = "ONC"
+        category = "Remote Access"
+        tcp_portrange = "111"
+        udp_portrange = "111"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_PPTP" {
+        name = "PPTP"
+        category = "Tunneling"
+        tcp_portrange = "1723"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_QUAKE" {
+        name = "QUAKE"
+        visibility = "disable"
+        udp_portrange = "26000 27000 27910 27960"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_RAUDIO" {
+        name = "RAUDIO"
+        visibility = "disable"
+        udp_portrange = "7070"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_REXEC" {
+        name = "REXEC"
+        visibility = "disable"
+        tcp_portrange = "512"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_RIP" {
+        name = "RIP"
+        category = "Network Services"
+        udp_portrange = "520"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_RLOGIN" {
+        name = "RLOGIN"
+        visibility = "disable"
+        tcp_portrange = "513:512-1023"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_RSH" {
+        name = "RSH"
+        visibility = "disable"
+        tcp_portrange = "514:512-1023"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SCCP" {
+        name = "SCCP"
+        category = "VoIP, Messaging & Other Applications"
+        tcp_portrange = "2000"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SIP" {
+        name = "SIP"
+        category = "VoIP, Messaging & Other Applications"
+        tcp_portrange = "5060"
+        udp_portrange = "5060"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SIP-MSNmessenger" {
+        name = "SIP"
+        category = "VoIP, Messaging & Other Applications"
+        tcp_portrange = "1863"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SNMP" {
+        name = "SNMP"
+        category = "Network Services"
+        tcp_portrange = "161-162"
+        udp_portrange = "161-162"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SSH" {
+        name = "SSH"
+        category = "Remote Access"
+        tcp_portrange = "22"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SYSLOG" {
+        name = "SYSLOG"
+        category = "Network Services"
+        udp_portrange = "514"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_TALK" {
+        name = "TALK"
+        visibility = "disable"
+        udp_portrange = "517-518"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_TELNET" {
+        name = "TELNET"
+        category = "Remote Access"
+        tcp_portrange = "23"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_TFTP" {
+        name = "TFTP"
+        category = "File Access"
+        udp_portrange = "69"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_MGCP" {
+        name = "MGCP"
+        visibility = "disable"
+        udp_portrange = "2427 2727"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_UUCP" {
+        name = "UUCP"
+        visibility = "disable"
+        tcp_portrange = "540"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_VDOLIVE" {
+        name = "VDOLIVE"
+        visibility = "disable"
+        tcp_portrange = "7000-7010"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_WAIS" {
+        name = "WAIS"
+        visibility = "disable"
+        tcp_portrange = "210"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_WINFRAME" {
+        name = "WINFRAME"
+        visibility = "disable"
+        tcp_portrange = "1494 2598"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_X-WINDOWS" {
+        name = "X"
+        category = "Remote Access"
+        tcp_portrange = "6000-6063"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_PING6" {
+        name = "PING6"
+        protocol = "ICMP6"
+        visibility = "disable"
+        icmptype = "128"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_MS-SQL" {
+        name = "MS"
+        category = "VoIP, Messaging & Other Applications"
+        tcp_portrange = "1433 1434"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_MYSQL" {
+        name = "MYSQL"
+        category = "VoIP, Messaging & Other Applications"
+        tcp_portrange = "3306"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_RDP" {
+        name = "RDP"
+        category = "Remote Access"
+        tcp_portrange = "3389"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_VNC" {
+        name = "VNC"
+        category = "Remote Access"
+        tcp_portrange = "5900"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_DHCP6" {
+        name = "DHCP6"
+        category = "Network Services"
+        udp_portrange = "546 547"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SQUID" {
+        name = "SQUID"
+        category = "Tunneling"
+        tcp_portrange = "3128"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_SOCKS" {
+        name = "SOCKS"
+        category = "Tunneling"
+        tcp_portrange = "1080"
+        udp_portrange = "1080"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_WINS" {
+        name = "WINS"
+        category = "Remote Access"
+        tcp_portrange = "1512"
+        udp_portrange = "1512"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_RADIUS" {
+        name = "RADIUS"
+        category = "Authentication"
+        udp_portrange = "1812 1813"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_RADIUS-OLD" {
+        name = "RADIUS"
+        visibility = "disable"
+        udp_portrange = "1645 1646"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_CVSPSERVER" {
+        name = "CVSPSERVER"
+        visibility = "disable"
+        tcp_portrange = "2401"
+        udp_portrange = "2401"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_AFS3" {
+        name = "AFS3"
+        category = "File Access"
+        tcp_portrange = "7000-7009"
+        udp_portrange = "7000-7009"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_TRACEROUTE" {
+        name = "TRACEROUTE"
+        category = "Network Services"
+        udp_portrange = "33434-33535"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_RTSP" {
+        name = "RTSP"
+        category = "VoIP, Messaging & Other Applications"
+        tcp_portrange = "554 7070 8554"
+        udp_portrange = "554"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_MMS" {
+        name = "MMS"
+        visibility = "disable"
+        tcp_portrange = "1755"
+        udp_portrange = "1024-5000"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_NONE" {
+        name = "NONE"
+        visibility = "disable"
+        tcp_portrange = "0"
+    }
+resource "fortios_firewallservice_custom"  "Service_Custom_Default_webproxy" {
+        name = "webproxy"
+        proxy = "enable"
+        category = "Web Proxy"
+        protocol = "ALL"
+        tcp_portrange = "0-65535:0-65535"
+    }
