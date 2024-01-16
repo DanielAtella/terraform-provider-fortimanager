@@ -29,6 +29,8 @@ resource "fortimanager_exec_workspace_action" "fw_lockres" {
   force_recreate = uuid()
 }
 
+
+
 resource "fortimanager_packages_firewall_policy" "config_fw_policy" {
   # for_each = var.customer.DummyCustumer.firewall.FGT8_FG-traffic.policy
   for_each = { for i in local.policy : "${i.firewall_key}-${i.policy_key}" => i.policy_value }
@@ -42,20 +44,19 @@ resource "fortimanager_packages_firewall_policy" "config_fw_policy" {
   srcaddr                 = each.value.srcaddr
   srcintf                 = each.value.srcintf
   status                  = "enable"
+  adom
   depends_on     = [fortimanager_exec_workspace_action.fw_lockres]
 }
 
 resource "fortimanager_json_generic_api" "fw_Commit_adom" {
-    json_content = <<JSON
-  {
+    json_content = jsonencode({
       "method": "exec",
       "params": [
           {
-            "url": "/dvmdb/adom/{{var.customer.DummyCustumer.adom}}/workspace/commit"
+            "url": "/dvmdb/adom/${var.customer.DummyCustumer.adom}/workspace/commit"
           }
       ]
-  }
-  JSON
+  })
   depends_on     = [fortimanager_packages_firewall_policy.config_fw_policy]
   }
 
