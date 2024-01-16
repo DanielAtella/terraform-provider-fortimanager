@@ -21,34 +21,34 @@ resource "fortimanager_exec_workspace_action" "vlan_lockres" {
 }
 
 resource "fortimanager_json_generic_api" "Create_Vlan" {
-  for_each = var.new_deploy ? { for i in local.interfaces : "${i.zone_key}-${i.interface_key}" => i.interface_value } : {}
-
-  json_content = jsonencode({
-    "method": "add",
-    "params": [
-      {
-        "url": "/pm/config/device/${var.customer.DummyCustumer.hostname}/global/system/interface",
-        "data": {
-          "name": each.value.ifname,
-          "vdom": [
-            var.customer.DummyCustumer.vdom
-          ],
-          "mode": "static",
-          "ip": [
-            each.value.address
-          ],
-          "allowaccess": "ping",
-          "type": "vlan",
-          "vlanid": each.value.vlanid,
-          "vlan-protocol": "8021q",
-          "interface": [
-            each.value.interface
+ for_each = var.new_deploy ? { for i in local.interfaces : "${i.zone_key}-${i.interface_key}" => i.interface_value } : {}
+json_content = jsonencode({
+          "method": "add",
+          "params": [
+              {
+                "url": "/pm/config/device/var.customer.DummyCustumer.hostname}/global/system/interface",
+                  "data": {
+                    "name": each.value.ifname,
+                    "vdom": [
+                       var.customer.DummyCustumer.vdom
+                    ],
+                    "mode": "static",
+                    "ip": [
+                        each.value.address
+                    ],
+                    "allowaccess": "ping",
+                    "type": "vlan",
+                    "vlanid": each.value.vlanid,
+                    "vlan-protocol": "8021q",
+                    "interface": [
+                        each.value.interface
+                    ]
+                }
+              }
           ]
-        }
+         })
       }
-    ]
-  })
-}
+
 
 
 resource "fortimanager_json_generic_api" "Delete_Vlan" {
