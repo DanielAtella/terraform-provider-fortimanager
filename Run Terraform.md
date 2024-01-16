@@ -40,3 +40,29 @@ terraform {
     }
   }
 }
+
+####
+
+Permissões FortiOS 
+
+config system accprofile
+ edit "API"
+        set scope global
+        set sysgrp custom
+        set netgrp custom
+        set fwgrp custom
+        set system-diagnostics disable
+        config netgrp-permission
+            set cfg read-write
+        end
+        config sysgrp-permission
+            set cfg read-write
+            set mnt read
+        end
+        config fwgrp-permission
+            set policy read-write
+            set address read-write
+            set service read-write
+        end
+    next
+end
