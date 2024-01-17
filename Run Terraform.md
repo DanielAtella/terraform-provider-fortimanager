@@ -1,7 +1,16 @@
 FortiOS - Environment variables
 
-export FORTIOS_ACCESS_HOSTNAME=192.168.216.137
-export FORTIOS_ACCESS_TOKEN=7jsrdzt3c3w3q9hjQ9G49pN77mx8Gt
+export FORTIOS_ACCESS_HOSTNAME={{ip-address}}
+export FORTIOS_ACCESS_TOKEN={{token}}
+
+export FORTIMANAGER_ACCESS_HOSTNAME={{ip-address}}
+export FORTIMANAGER_ACCESS_USERNAME={{user-name}}
+export FORTIMANAGER_ACCESS_PASSWORD={{password}}
+
+Acesso por token:
+
+export FORTIMANAGER_ACCESS_HOSTNAME={{ip-address}}
+export FORTIMANAGER_ACCESS_TOKEN={{token}}
 
 FortiOS and FortiManager Deploy new service
 

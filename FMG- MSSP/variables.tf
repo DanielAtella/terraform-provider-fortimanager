@@ -3,6 +3,7 @@ variable "customer" {
     adom = optional(string, "")
     vdom = optional(string, "")
     hostname = optional(string, "")
+    hostip = optional(string, "")
     zone = map(object({
       interfaces = map(object({
           vlanid = optional(string, "")
@@ -77,7 +78,22 @@ variable "customer" {
           object_address_obj_type = optional(string, "")
           object_address_type = optional(string, "")
           }))
+        object_service = map(object({
+          object_service_name = optional(string, "")
+          object_service_protocol = optional(string, "")
+          object_service_tcp_portrange = optional(string, "")
+          object_service_udp_portrange = optional(string, "")
+          object_service_sctp_portrange = optional(string, "")
+          }))
+        object_fqdn = map(object({
+          object_fqdn_name = optional(string, "")
+          object_fqdn_wildcard = optional(string, "")
+          }))
       }))
+    users = map(object({
+          userid = optional(string, "")
+          password = optional(list(string), [""])
+          profileid = optional(string, "Restricted_User")
   }))
 }
 

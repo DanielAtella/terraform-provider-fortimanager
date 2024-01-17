@@ -159,9 +159,20 @@ customer = {
         }
         object_address = {
         }
+        object_fqdn = {
+        }
+        object_service = {
+        }
       }
     }
-    vdom = "FG-Traffic"
+    users = {
+      customer_ro = {
+            userid = "customer_ro"
+            password = ["1qaz2wsx"]
+            profileid = "Restricted_User"
+      }
+    }
+    vdom = "FG-traffic"
     adom = "DummyAdom"
     hostname = "FGT8"
   }
